@@ -1,4 +1,4 @@
-CONTEXT = redlogic
+CONTEXT = alex
 VERSION = v1.0
 IMAGE_NAME = web2py
 REGISTRY = 172.30.236.224:5000
