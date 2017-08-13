@@ -1,0 +1,25 @@
+# http://www.web2py.com/AlterEgo/default/show/140
+
+You can start web2py with
+
+python web2py.py -c server.crt -k server.key
+
+then it will serve pages via https. But how do you get the server.crt and server.key files? You need to have OpenSSL (or equivalent software) installed. Then you do the following:
+
+generate your private key:
+
+openssl genrsa -out server.key 2048
+
+create a certificate
+
+openssl req -new -key server.key -out server.csr
+
+the software will ask you a few questions during the key generation, just answer them
+
+Now you need to get your certificated "signed". You can either pay some certification authority to do this, or you can self-sign your key:
+
+openssl x509 -req -days 365 -in server.csr -signkey server.key -out server.crt
+
+This will make your key valid for 365 days - change the value after "-days" if you need.
+
+Enjoy!
