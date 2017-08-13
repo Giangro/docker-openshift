@@ -1,5 +1,5 @@
 CONTEXT = redlogic
-VERSION = v1.0
+VERSION = v1.0a
 IMAGE_NAME = web2py
 REGISTRY = 172.30.236.224:5000
 OC_USER=devops
