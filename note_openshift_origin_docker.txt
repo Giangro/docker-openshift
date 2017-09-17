@@ -30,7 +30,12 @@ localhost.localdomain   Ready     12m       v1.7.0+695f48a16f
 === node describe ===
 oc describe node localhost.localdomain
 
- 
+=== add role admin to devops ===
+[root@localhost origin]# oc policy add-role-to-user admin devops -n default
+role "admin" added: "devops"
+[root@localhost origin]#
+
+
 === deploy a registry inside openshift origin (docker container) ===
 oadm registry --config=/var/lib/origin/openshift.local.config/master/admin.kubeconfig --service-account=registry
 
@@ -61,12 +66,11 @@ Router "router" service exists
 [root@localhost origin]#
 
 === create registry console ===
-oc create -n default -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_hosted_templates/files/v1.5/origin/registry-console.yaml
-[root@localhost /]# oc create route passthrough --service registry-console \
->     --port registry-console \
->     -n default
+oc create -n default -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_hosted_templates/files/v3.7/origin/registry-console.yaml
+#oc create -n default -f https://raw.githubusercontent.com/openshift/openshift-ansible/master/roles/openshift_hosted_templates/files/v1.5/origin/registry-console.yaml
+[root@localhost origin]# oc create route passthrough --service registry-console --port registry-console -n default
 route "registry-console" created
-[root@localhost /]#
+[root@localhost origin]#
 
 oc new-app -n default --template=registry-console \
     -p OPENSHIFT_OAUTH_PROVIDER_URL="https://192.168.0.100:8443" \
@@ -83,5 +87,12 @@ OPTIONS='--selinux-enabled --log-driver=journald --signature-verification=false 
 docker login -p sYk_d5_cZdJv5Dq-UoycUpgnvjXaF_7yZJWSh-dkGXg -u devops 172.30.236.224:5000
 docker tag alex/web2py_alpine 172.30.236.224:5000/default/web2py-alpine
 docker push 172.30.236.224:5000/default/web2py-alpine
+
+=== delete all container ===
+docker ps -a | tail -n+2 | awk '{ print $1 }' | xargs docker rm
+
+=== delete all images ===
+docker images | tail -n+2 | awk '{ print $3 }' | xargs docker rmi
+
 
 
