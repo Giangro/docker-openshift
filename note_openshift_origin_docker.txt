@@ -1,3 +1,7 @@
+=== git  align from remote/origin ===
+git fetch origin
+git reset --hard origin/master
+
 === script per lo startup di openshift origin tramite docker ===
 #!/bin/sh
 
