@@ -1,10 +1,11 @@
 CONTEXT = alex
 VERSION = v1.0
 IMAGE_NAME = web2py
-REGISTRY = 172.30.236.224:5000
+#REGISTRY = 172.30.236.224:5000
+REGISTRY = 172.17.0.3:5000
 OC_USER=devops
 OC_PASS=devops
-PROJECT=default
+PROJECT=web2py
 
 # Allow user to pass in OS build options
 ifeq ($(TARGET),alpine)
